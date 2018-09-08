@@ -14,4 +14,4 @@ index_response = es.index(index="ja-test_index", doc_type="script", body=doc_jso
 
 search_res = es.search(index="ja-test_index", body={"query": {"match": {"script": {"query": "cash money", "fuzziness": "AUTO"}}}})
 for hit in search_res['hits']['hits']:
-    print(hit)
+    print(hit['_source']['link'])
