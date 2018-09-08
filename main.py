@@ -1,8 +1,10 @@
 import discord
+import error_handler
 from discord.ext import commands
+import config
 
 bot = commands.Bot(command_prefix=['?', '!'], description="jake and amir bot!")
-
+bot.add_cog(error_handler.CommandErrorHandler(bot))
 @bot.event
 async def on_ready():
     print('Logged in as')
@@ -14,4 +16,8 @@ async def on_ready():
 async def ping():
     await bot.say("pong!")
 
-bot.run('NDcyMjE5ODgxNTc2NzI2NTYw.DjwOYA.AZU_f1dEB4eXQ9nrLZEieri_k0I')
+@bot.command()
+async def search(*, input):
+    await bot.say("you searched " + input)
+
+bot.run(config.token)
