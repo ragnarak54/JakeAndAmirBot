@@ -38,7 +38,8 @@ def save_script(doc):
 
 def search_script(query):
     # search for a script + link
-    search_res = es.search(index=current_index, body={"query": {"match": {"script": {"query": query}}}})
+    search_res = es.search(index=current_index, body={"query": {"match": {"script":
+                                                                              {"query": query, "fuzziness": "AUTO"}}}})
     for hit in search_res['hits']['hits']:
         print(hit)
 
@@ -54,3 +55,6 @@ def clear_index():
 
 # save_script(create_script("triathlon.txt", youtube_search("Jake and Amir Triathlon")))
 # save_script(create_script("corduroy_pants.txt", youtube_search("Jake and Amir Corduroy Pants")))
+
+
+search_script("how you gonna handle this one")
