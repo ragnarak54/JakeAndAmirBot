@@ -3,6 +3,9 @@ import json
 import config
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import csv
+import praw
+
 
 es = Elasticsearch()
 current_index = "ja-test_index"
@@ -10,6 +13,25 @@ current_index = "ja-test_index"
 GOOGLE_API_KEY = config.google_api_key
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
+
+
+def read_script_from_reddit(link):
+    reddit = praw.Reddit(client_id=config.reddit_id,
+                         client_secret=config.reddit_secret,
+                         user_agent=config.reddit_id + config.reddit_username,
+                         username=config.reddit_username,
+                         password=config.reddit_password)
+
+    script_submission = reddit.get_submission(link)
+    print(script_submission.selftext)
+
+
+def read_ja_csv():
+    with open('JakeAndAmir_spreadsheet.csv', encoding="utf8") as scripts_spreadsheet:
+        csv_reader = csv.reader(scripts_spreadsheet)
+        for row in csv_reader:
+            print("Title: " + row[0] + "\nLink: " + row[2])
+            read_script_from_reddit(row[2])
 
 
 def youtube_search(query):
@@ -56,5 +78,4 @@ def clear_index():
 # save_script(create_script("triathlon.txt", youtube_search("Jake and Amir Triathlon")))
 # save_script(create_script("corduroy_pants.txt", youtube_search("Jake and Amir Corduroy Pants")))
 
-
-search_script("how you gonna handle this one")
+read_ja_csv()
