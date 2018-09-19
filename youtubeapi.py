@@ -12,11 +12,10 @@ def search(query):
         youtube = build(serviceName=YOUTUBE_API_SERVICE_NAME, version=YOUTUBE_API_VERSION, developerKey=GOOGLE_API_KEY)
         search_response = youtube.search().list(q=query, type="video", maxResults=1, part="id").execute()
 
-        # TODO: solve the error below in accessing dictionary indices
-        if search_response['items'][0]['id']['videoId']:
-            return "https://www.youtube.com/watch?v=" + search_response['items'][0]['id']['videoId']
-        else:
-            return "Sorry, I could not find a video for this skit."
+        return "https://www.youtube.com/watch?v=" + search_response['items'][0]['id']['videoId']
 
     except HttpError as e:
         print('An HTTP error %d occurred:\n%s' % (e.resp.status, e.content))
+
+    except KeyError:
+        return "Sorry, I could not find a video for this skit."
