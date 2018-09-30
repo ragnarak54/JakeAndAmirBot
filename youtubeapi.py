@@ -18,4 +18,4 @@ def search(query):
         print('An HTTP error %d occurred:\n%s' % (e.resp.status, e.content))
 
     except KeyError:
-        return "Sorry, I could not find a video for this skit."
+        return "Could not find a video for this skit."
