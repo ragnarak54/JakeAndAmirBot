@@ -16,12 +16,12 @@ async def on_ready():
 
 
 @bot.command()
-async def search(*, quote):
+async def search(ctx, *, quote):
     elasticsearch_hit = ES.search_script(quote)
 
     if elasticsearch_hit and '_source' in elasticsearch_hit:
-        await bot.say(elasticsearch_hit['_source']['youtube_link'] + "\n" + elasticsearch_hit['_source']['reddit_link'])
+        await ctx.send(elasticsearch_hit['_source']['youtube_link'] + "\n" + elasticsearch_hit['_source']['reddit_link'])
     else:
-        await bot.say("Sorry, couldn't find an episode for that quote.")
+        await ctx.send("Sorry, couldn't find an episode for that quote.")
 
 bot.run(config.discord_token)
