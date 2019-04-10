@@ -6,7 +6,7 @@ import redditapi as reddit
 import os
 
 es = Elasticsearch()
-current_index = "ja-test_index"
+current_index = "ja-_index"
 
 
 def auto_index_scripts():
